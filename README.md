@@ -46,3 +46,25 @@ For commands, you can simply run:
 ```sh
 docker run --rm -it coreos-qemu -h
 ```
+
+```
+Usage: ./coreos_production_qemu.sh [-a authorized_keys] [--] [qemu options...]
+Options:
+    -i FILE     File containing an Ignition config
+    -u FILE     Cloudinit user-data as either a cloud config or script.
+    -c FILE     Config drive as an iso or fat filesystem image.
+    -a FILE     SSH public keys for login access. [~/.ssh/id_{dsa,rsa}.pub]
+    -p PORT     The port on localhost to map to the VM's sshd. [2222]
+    -s          Safe settings: single simple cpu and no KVM.
+    -h          this ;-)
+
+This script is a wrapper around qemu for starting CoreOS virtual machines.
+The -a option may be used to specify a particular ssh public key to give
+login access to. If -a is not provided ~/.ssh/id_{dsa,rsa}.pub is used.
+If no public key is provided or found the VM will still boot but you may
+be unable to login unless you built the image yourself after setting a
+password for the core user with the 'set_shared_user_password.sh' script.
+
+Any arguments after -a and -p will be passed through to qemu, -- may be
+used as an explicit separator. See the qemu(1) man page for more details.
+```
